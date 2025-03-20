@@ -1,0 +1,38 @@
+---
+- name: dhcp
+  hosts: web
+  tasks:
+    # 1. apt 패키지 목록 갱신
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600  # 1시간 동안 유효한 캐시
+
+    # 2. ISC DHCP 서버 설치
+    - name: Install ISC DHCP server
+      apt:
+        name: isc-dhcp-server
+        state: present
+
+    # 3. /etc/dhcp/dhcpd.conf 파일 설정
+    - name: Configure DHCP server settings
+      copy:
+        dest: /etc/dhcp/dhcpd.conf
+        content: |
+          # Sample DHCP Configuration
+          # DHCP 서버 설정을 위한 기본 구성을 여기에 추가하세요.
+
+    # 4. DHCP 서버 인터페이스 설정
+    - name: Set DHCP server to use the correct interface
+      lineinfile:
+        path: /etc/default/isc-dhcp-server
+        regexp: '^INTERFACESv4'
+        line: 'INTERFACESv4="eth0"'
+
+    # 5. DHCP 서버 서비스 시작
+    - name: Ensure DHCP server is running
+      service:
+        name: isc-dhcp-server
+        state: started
+        enabled: yes  # 부팅 시 자동 시작
+
