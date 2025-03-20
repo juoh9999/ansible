@@ -1,0 +1,13 @@
+---
+- name: with_nested 예시
+  hosts: web
+  tasks:
+    - name: 중첩된 리스트 반복
+      debug:
+        msg: "첫 번째 값: {{ item[0] }}, 두 번째 값: {{ item[1] }}"
+      loop: 
+        - ['apple', 'banana']
+        - ['red', 'yellow']
+      loop_control:
+        index_var: idx
+

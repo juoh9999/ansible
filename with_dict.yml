@@ -1,0 +1,9 @@
+---
+- name: with_dict 예시
+  hosts: web
+  tasks:
+    - name: 딕셔너리의 키와 값 출력
+      debug:
+        msg: "키: {{ item.key }}, 값: {{ item.value }}"
+      loop: "{{ {'user1': 'admin', 'user2': 'guest', 'user3': 'root'} | dict2items }}"
+
