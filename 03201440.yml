@@ -1,0 +1,7 @@
+- name: aahhhhhh
+  hosts: web
+  tasks:
+    - name: repeating numbers
+      debug:
+        msg: "number: {{ item }}"
+      with_sequence: "start=1 end=5"
