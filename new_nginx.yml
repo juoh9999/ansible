@@ -1,5 +1,5 @@
 - name: Install and configure Nginx on Ubuntu
-  hosts: web
+  hosts: ec2
   become: yes
   tasks:
     - name: Install Nginx
@@ -8,8 +8,17 @@
         state: present
         update_cache: yes
 
+    - name: Ensure the directory exists
+      file:
+        path: /var/www/html
+        state: directory
+        mode: '0755'
+
     - name: Create index.html with "hello"
-      command: echo "hello" > /var/www/html/index.html
+      copy:
+        dest: /var/www/html/index.html
+        content: "hello"
+        mode: '0644'
 
     - name: Test nginx configuration
       command: nginx -t
