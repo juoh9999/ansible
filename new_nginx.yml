@@ -1,0 +1,22 @@
+- name: Install and configure Nginx on Ubuntu
+  hosts: web
+  become: yes
+  tasks:
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+
+    - name: Create index.html with "hello"
+      command: echo "hello" > /var/www/html/index.html
+
+    - name: Test nginx configuration
+      command: nginx -t
+
+    - name: Restart nginx
+      systemd:
+        name: nginx
+        state: restarted
+        enabled: yes
+
